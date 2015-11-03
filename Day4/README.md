@@ -1,0 +1,5 @@
+# React.jsのComponentについて
+
+Reactは基本的にはComponentを作って組み合わせていくことでアプリケーションを作成していく。
+
+そのComponentの基礎を学んでいく
