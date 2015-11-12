@@ -92,3 +92,58 @@ var OreTextArea = React.createClass({
   }
 });
 ```
+
+# select
+
+`value`に値を設定してあげればOK。
+
+また、`multiple={true}`のPropを指定するとvalueに配列が指定できるようになって、複数要素が扱える。
+
+```js
+var OreSelectBox = React.createClass({
+  getDefaultProps() {
+    return {
+      answers: [1, 10, 100, 1000]
+    };
+  },
+  getInitialState() {
+    return {
+      selectValue: 1,
+      selectValues: [1,100]
+    };
+  },
+  onChangeSelectValue(e) {
+    this.setState({selectValue: e.target.value});
+  },
+  // 他に良い方法があるかもい...
+  onChangeSelectValues(e) {
+    var values = _.chain(e.target.options)
+      .filter(function(option) { return option.selected })
+      .map(function(option) { return +option.value })
+      .value()
+    ;
+    this.setState({selectValues: values});
+  },
+  render() {
+    var options = this.props.answers.map(function(answer) {
+      return <option value={answer} key={answer}>{answer}</option>;
+    });
+    return (
+      <div>
+        <div>selectValue: {this.state.selectValue}</div>
+        <div>
+          <select value={this.state.selectValue} onChange={this.onChangeSelectValue}>
+            {options}
+          </select>
+        </div>
+        <div>selectValues: {this.state.selectValues.join(",")}</div> 
+        <div>
+          <select multiple={true} defaultValue={this.state.selectValues} onChange={this.onChangeSelectValues}>
+            {options}
+          </select>
+        </div>     
+      </div>
+    );
+  }
+});
+```
